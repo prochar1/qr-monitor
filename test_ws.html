@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WS test</title>
+  </head>
+  <body>
+    <h3>WebSocket test</h3>
+    <button id="connect">Connect</button>
+    <pre id="log"></pre>
+    <script>
+      const log = (msg) =>
+        (document.getElementById("log").textContent += msg + "\n");
+      document.getElementById("connect").onclick = () => {
+        try {
+          const ws = new WebSocket("ws://127.0.0.1:8081");
+          ws.onopen = () => log("open");
+          ws.onmessage = (e) => log("msg: " + e.data);
+          ws.onclose = () => log("closed");
+          ws.onerror = (e) => log("error: " + JSON.stringify(e));
+        } catch (err) {
+          log("exception: " + err);
+        }
+      };
+    </script>
+  </body>
+</html>
